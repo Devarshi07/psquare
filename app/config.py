@@ -2,7 +2,7 @@
 from functools import lru_cache
 from typing import Optional
 
-from pydantic import Field
+from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -56,6 +56,17 @@ class Settings(BaseSettings):
 
     # Admin
     admin_phone_numbers: list[str] = Field(default_factory=list, alias="ADMIN_PHONE_NUMBERS")
+
+    @field_validator("admin_phone_numbers", mode="before")
+    @classmethod
+    def parse_phone_list(cls, v):
+        if isinstance(v, str):
+            v = v.strip()
+            if v.startswith("["):
+                import json
+                return json.loads(v)
+            return [p.strip() for p in v.split(",") if p.strip()]
+        return v
 
     @property
     def is_production(self) -> bool:
