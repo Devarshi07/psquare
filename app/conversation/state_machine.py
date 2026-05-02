@@ -567,8 +567,11 @@ class ConversationManager:
         for key, value in parsed.items():
             setattr(state, key, value)
 
-        # Move to next step
-        next_step = OnboardingStep(current_step + 1)
+        # Move to next step (Q12 → COMPLETE)
+        if current_step == OnboardingStep.Q12_SLEEP_STRESS:
+            next_step = OnboardingStep.COMPLETE
+        else:
+            next_step = OnboardingStep(current_step + 1)
         state.onboarding_step = next_step
 
         # Check if onboarding complete
