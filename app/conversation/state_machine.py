@@ -416,7 +416,46 @@ class ConversationManager:
         elif state.state == ConversationState.ONBOARDING:
             return await self.handle_onboarding(phone, text, state)
         else:
-            return await self.handle_onboarding(phone, text, state)
+            return await self.handle_completed(phone, text, state)
+
+    async def handle_completed(self, phone: str, text: str, state: UserState) -> dict:
+        """Handle messages from a user who has finished onboarding."""
+        t = text.lower().strip()
+
+        if t in ("report", "pdf", "my report"):
+            return {
+                "type": "text",
+                "message": (
+                    "📄 Your full PDF report isn't ready yet — I'm still finalising "
+                    "the layout. For now, type *score* to see your Heart Score, "
+                    "*ppg* to do a 30-sec camera scan, or *bioage* for your biological age."
+                ),
+            }
+        if t in ("score", "heart score"):
+            return {"type": "text", "trigger_heart_score": True, "message": "Recomputing your Heart Score..."}
+        if t in ("ppg", "ppg scan", "scan"):
+            return {
+                "type": "text",
+                "message": (
+                    "📷 PPG scan link is coming soon — the mini-app capture flow "
+                    "is being wired up. Stay tuned!"
+                ),
+            }
+        if t in ("bioage", "bio age", "biological age"):
+            return {
+                "type": "text",
+                "message": (
+                    "🧬 Biological Age module is coming soon — the face capture "
+                    "and 5-question intake are being wired up."
+                ),
+            }
+        return {
+            "type": "text",
+            "message": (
+                "I can help with: *score* (heart score), *ppg* (camera scan), "
+                "*bioage* (biological age), *report* (PDF report)."
+            ),
+        }
 
     async def handle_new(self, phone: str, text: str, state: UserState) -> dict:
         """Handle new user."""

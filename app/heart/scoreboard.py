@@ -176,6 +176,8 @@ def build_scoreboard(inputs) -> HeartScoreboard:
         color=chol_color,
         explanation=(
             f"Your LDL is {inputs.ldl:.0f} mg/dL, which is {chol_status.lower()}."
+            if inputs.ldl
+            else "LDL not recorded — share a recent lipid panel to unlock this pillar."
         ),
         action="Reduce saturated fats; consider Mediterranean diet.",
         points_cost=chol_points,
