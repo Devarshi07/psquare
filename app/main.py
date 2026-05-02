@@ -136,16 +136,6 @@ async def receive_bioage_photo(request: dict):
 
 @app.get("/api/heart/score/{user_id}")
 async def get_heart_score(user_id: int):
-    """Get the latest heart score for a user."""
-    # TODO: Implement - pull from DB
-    return {"error": "Not implemented yet"}
-
-
-# Heart score endpoint (placeholder for now)
-@app.get("/api/heart/score/{user_id}")
-async def get_heart_score(user_id: int):
-    """Get the latest heart score for a user."""
-    # TODO: Implement in Phase 2
     return {"error": "Not implemented yet"}
 
 
