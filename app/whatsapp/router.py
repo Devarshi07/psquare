@@ -19,7 +19,7 @@ adapter = get_whatsapp_adapter()
 conversation_mgr = get_conversation_manager()
 
 
-@router.get("")
+@router.get("/webhook")
 async def verify_webhook(
     mode: str = Query(...),
     token: str = Query(...),
@@ -33,7 +33,7 @@ async def verify_webhook(
     return JSONResponse(status_code=403, content={"error": "Verification failed"})
 
 
-@router.post("")
+@router.post("/webhook")
 async def handle_webhook(
     request: Request,
     x_hub_signature: Optional[str] = Header(None),
