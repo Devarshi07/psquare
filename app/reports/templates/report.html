@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>P² Heart & Longevity Report</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #1F2937;
+      background: #FAF7F2;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      padding: 15mm;
+      margin: 0 auto;
+      background: white;
+      page-break-after: always;
+    }
+
+    .cover {
+      text-align: center;
+      padding: 40mm 0;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #0F766E;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #1F2937;
+      margin: 20px 0 12px;
+    }
+
+    h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1F2937;
+      margin: 16px 0 8px;
+    }
+
+    .teal { color: #0F766E; }
+    .coral { color: #F97366; }
+    .green { color: #10B981; }
+    .amber { color: #F59E0B; }
+    .red { color: #EF4444; }
+
+    .section {
+      margin-bottom: 24px;
+    }
+
+    .two-column {
+      display: flex;
+      gap: 20px;
+    }
+
+    .column {
+      flex: 1;
+    }
+
+    .hero-score {
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #0F766E 0%, #14B8A6 100%);
+      border-radius: 12px;
+      color: white;
+    }
+
+    .hero-score .score {
+      font-size: 64px;
+      font-weight: 700;
+    }
+
+    .hero-score .band {
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    .bio-age-hero {
+      text-align: center;
+      padding: 20px;
+      background: #FAF7F2;
+      border-radius: 12px;
+      border: 2px solid #0F766E;
+    }
+
+    .bio-age-hero .age {
+      font-size: 36px;
+      font-weight: 700;
+      color: #0F766E;
+    }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .pillar {
+      padding: 12px;
+      background: #FAF7F2;
+      border-radius: 8px;
+      border-left: 4px solid #10B981;
+    }
+
+    .pillar.warning { border-left-color: #F59E0B; }
+    .pillar.danger { border-left-color: #EF4444; }
+
+    .pillar-name {
+      font-weight: 600;
+      font-size: 11px;
+      color: #1F2937;
+    }
+
+    .pillar-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: #0F766E;
+    }
+
+    .pillar-status {
+      font-size: 10px;
+      color: #6B7280;
+    }
+
+    .chart-box {
+      background: #FAF7F2;
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    th, td {
+      padding: 8px 12px;
+      text-align: left;
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    th {
+      background: #F3F4F6;
+      font-weight: 600;
+    }
+
+    ul, ol {
+      margin-left: 16px;
+    }
+
+    li {
+      margin-bottom: 4px;
+    }
+
+    .disclaimer {
+      font-size: 10px;
+      color: #9CA3AF;
+      padding: 16px;
+      background: #F3F4F6;
+      border-radius: 8px;
+      line-height: 1.6;
+    }
+
+    .footer {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid #E5E7EB;
+      color: #9CA3AF;
+      font-size: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Page 1: Cover -->
+  <div class="page">
+    <div class="cover">
+      <h1>P²</h1>
+      <p style="font-size: 18px; color: #6B7280;">Your Heart & Longevity Report</p>
+      <div style="margin-top: 40px;">
+        <p style="font-size: 16px;">{{ user_name }}</p>
+        <p style="color: #6B7280;">Generated on {{ report_date }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page 2: Hero Scores -->
+  <div class="page">
+    <div class="section">
+      <h2>Your Heart & Longevity Snapshot</h2>
+      <div class="two-column">
+        <div class="hero-score">
+          <p style="font-size: 14px; opacity: 0.9;">P² Heart Score</p>
+          <p class="score">{{ heart_score }}</p>
+          <p class="band">{{ heart_score_band }}</p>
+          <p style="font-size: 10px; margin-top: 8px;">Confidence: {{ heart_score_confidence }}</p>
+        </div>
+        <div class="bio-age-hero">
+          <p style="font-size: 12px; color: #6B7280;">Biological Age</p>
+          <p class="age">{{ bio_age }}</p>
+          <p style="font-size: 14px;">{{ bio_age_gap }} ({{ bio_age_status }})</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Heart Score Breakdown</h2>
+      <div class="pillars-grid">
+        {% for pillar in pillars %}
+        <div class="pillar {{ pillar.pillar_class }}">
+          <p class="pillar-name">{{ pillar.name }}</p>
+          <p class="pillar-value">{{ pillar.value }}</p>
+          <p class="pillar-status">{{ pillar.status }}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Page 3: PPG & Risk -->
+  <div class="page">
+    <div class="section">
+      <h2>PPG Vitals Scan</h2>
+      {% if ppg_data %}
+      <div class="two-column">
+        <div>
+          <p><strong>Heart Rate:</strong> {{ ppg_data.hr_bpm }} BPM</p>
+          <p><strong>HRV (RMSSD):</strong> {{ ppg_data.rmssd_ms }} ms</p>
+          <p><strong>Stress Index:</strong> {{ ppg_data.stress_index }}/100 ({{ ppg_data.stress_band }})</p>
+        </div>
+        <div class="chart-box">
+          {{ ppg_waveform | safe }}
+        </div>
+      </div>
+      {% else %}
+      <p>No PPG scan data available. Complete a scan to see your vitals.</p>
+      {% endif %}
+    </div>
+
+    <div class="section">
+      <h2>10-Year Cardiovascular Risk</h2>
+      <p>Your risk: <strong>{{ cv_risk }}%</strong> ({{ cv_risk_category }})</p>
+      <p style="color: #6B7280; margin-top: 8px;">{{ cv_risk_explanation }}</p>
+    </div>
+
+    <div class="section">
+      <h2>Heart Age</h2>
+      <p>Heart Age: <strong>{{ heart_age }}</strong> years</p>
+      <p>Gap: {{ heart_age_gap }} years {{ heart_age_status }}</p>
+    </div>
+  </div>
+
+  <!-- Page 4: Bio Age Details -->
+  <div class="page">
+    <div class="section">
+      <h2>Biological Age Details</h2>
+      {{ bioage_visual | safe }}
+    </div>
+
+    <div class="section">
+      <h3>Top Visible & Lifestyle Drivers</h3>
+      {% if bio_age_drivers %}
+      <ul>
+        {% for driver in bio_age_drivers %}
+        <li><strong>{{ driver.factor }}</strong> - {{ driver.evidence }} ({{ driver.severity }})</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>Complete a Face Age scan to see your drivers.</p>
+      {% endif %}
+    </div>
+
+    <div class="section">
+      <h3>60-Day Reversal Plan</h3>
+      <p><strong>Week 1:</strong> {{ reversal_week1 }}</p>
+      <p><strong>Week 2:</strong> {{ reversal_week2 }}</p>
+      <p><strong>Week 3:</strong> {{ reversal_week3 }}</p>
+      <p><strong>Week 4:</strong> {{ reversal_week4 }}</p>
+    </div>
+  </div>
+
+  <!-- Page 5: Plans -->
+  <div class="page">
+    <div class="section">
+      <h2>Your Cardio + Strength Plan</h2>
+      <h3>This Week's Cardio</h3>
+      <p>{{ cardio_plan }}</p>
+
+      <h3>This Week's Strength</h3>
+      <p>{{ strength_plan }}</p>
+    </div>
+
+    <div class="section">
+      <h2>Heart-Healthy Eating</h2>
+      <p>{{ meal_suggestions }}</p>
+    </div>
+
+    <div class="section">
+      <h2>Daily Habits & Stress Practice</h2>
+      <p><strong>Today's Practice:</strong> {{ stress_practice }}</p>
+      <p><strong>Habit Streak:</strong> {{ habit_streak }} days</p>
+    </div>
+  </div>
+
+  <!-- Page 6: Lab Cadence & Disclaimer -->
+  <div class="page">
+    <div class="section">
+      <h2>Your Lab Cadence</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Test</th>
+            <th>Frequency</th>
+            <th>Next Due</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for lab in lab_cadence %}
+          <tr>
+            <td>{{ lab.name }}</td>
+            <td>{{ lab.frequency }}</td>
+            <td>{{ lab.next_due }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Glossary</h2>
+      <p><strong>RMSSD:</strong> Root Mean Square of Successive Differences - measures heart rate variability</p>
+      <p><strong>HRV:</strong> Heart Rate Variability - higher is generally better</p>
+      <p><strong>LDL:</strong> Low-density lipoprotein - "bad" cholesterol</p>
+      <p><strong>HDL:</strong> High-density lipoprotein - "good" cholesterol</p>
+      <p><strong>QRISK3:</strong> 10-year cardiovascular risk calculator</p>
+    </div>
+
+    <div class="section disclaimer">
+      <p><strong>Disclaimer:</strong></p>
+      <p>P Square provides wellness guidance based on the information you share. It does not diagnose, treat, or cure any disease. The P² Heart Score, PPG scan results, and Biological Age are educational estimates, not medical diagnoses. PPG via smartphone camera is not a medical-grade ECG or pulse oximeter. Always consult a licensed physician before making medical decisions, especially before starting/stopping medication or beginning a new exercise program.</p>
+    </div>
+
+    <div class="footer">
+      <p>Generated by P Square | psquare.health</p>
+      <p>This report is for wellness purposes only.</p>
+    </div>
+  </div>
+</body>
+</html>
