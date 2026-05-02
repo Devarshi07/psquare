@@ -2,7 +2,7 @@
 from functools import lru_cache
 from typing import Optional
 
-from pydantic import Field, field_validator
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -54,19 +54,18 @@ class Settings(BaseSettings):
     miniapp_base_url: str = Field(default="http://localhost:5173", alias="MINIAPP_BASE_URL")
     miniapp_jwt_secret: str = Field(default="", alias="MINIAPP_JWT_SECRET")
 
-    # Admin
-    admin_phone_numbers: list[str] = Field(default_factory=list, alias="ADMIN_PHONE_NUMBERS")
+    # Admin — stored as raw string, parsed via property
+    admin_phone_numbers_raw: str = Field(default="", alias="ADMIN_PHONE_NUMBERS")
 
-    @field_validator("admin_phone_numbers", mode="before")
-    @classmethod
-    def parse_phone_list(cls, v):
-        if isinstance(v, str):
-            v = v.strip()
-            if v.startswith("["):
-                import json
-                return json.loads(v)
-            return [p.strip() for p in v.split(",") if p.strip()]
-        return v
+    @property
+    def admin_phone_numbers(self) -> list[str]:
+        v = self.admin_phone_numbers_raw.strip()
+        if not v:
+            return []
+        if v.startswith("["):
+            import json
+            return json.loads(v)
+        return [p.strip() for p in v.split(",") if p.strip()]
 
     @property
     def is_production(self) -> bool:
